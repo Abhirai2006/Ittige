@@ -1,1 +1,20 @@
-{"name":"ittige-site","version":"1.0.0","private":true,"scripts":{"dev":"next dev","build":"next build","start":"next start"},"dependencies":{"next":"^14.2.15","react":"^18.3.1","react-dom":"^18.3.1","three":"^0.169.0"}}
+{
+  "name": "ittige-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0"
+  },
+  "description": "Scroll-driven website for Ittige, a social enterprise plan that turns low-value plastic waste into pavers and solid blocks in Mysuru.",
+  "engines": {
+    "node": ">=18.17"
+  }
+}
