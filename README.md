@@ -11,10 +11,11 @@
   <img src="https://img.shields.io/badge/React-18-087EA4?logo=react&logoColor=white" alt="React 18">
   <img src="https://img.shields.io/badge/Three.js-WebGL-000000?logo=threedotjs&logoColor=white" alt="Three.js">
   <img src="https://img.shields.io/badge/Export-static-B5432A" alt="Static export">
-  <img src="https://img.shields.io/badge/Deploy-Vercel%20%7C%20Netlify-2B2724" alt="Deploy on Vercel or Netlify">
+  <img src="https://img.shields.io/badge/Deploy-Vercel-2B2724?logo=vercel&logoColor=white" alt="Deployed on Vercel">
 </p>
 
 <p>
+  <a href="https://ittige.vercel.app/"><b>Live site</b></a> &nbsp;|&nbsp;
   <a href="#about">About</a> &nbsp;|&nbsp;
   <a href="#the-animation">Animation</a> &nbsp;|&nbsp;
   <a href="#the-numbers">Numbers</a> &nbsp;|&nbsp;
@@ -26,8 +27,6 @@
 
 <p>
   <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbhirai2006%2Fittige"><img src="https://vercel.com/button" alt="Deploy with Vercel" height="36"></a>
-  &nbsp;
-  <a href="https://app.netlify.com/start/deploy?repository=https://github.com/Abhirai2006/ittige"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="36"></a>
 </p>
 
 </div>
@@ -38,7 +37,7 @@
 
 **Ittige** (Kannada for *brick*) is a social enterprise business plan for a small unit in Mysuru that turns low-value plastic packaging into pavers and solid blocks for compound walls. It was developed for the course *Management and Entrepreneurship* (21AI51) at the University of Mysore School of Engineering.
 
-This repository holds the project website. It tells the story in four parts: the waste problem, how a block is made, the honest cost numbers, and the team. Every figure on the site is either cited in the accompanying report or labelled there as an assumption.
+This repository holds the project website, live at **[ittige.vercel.app](https://ittige.vercel.app/)**. It tells the story in four parts: the waste problem, how a block is made, the honest cost numbers, and the team. Every figure on the site is either cited in the accompanying report or labelled there as an assumption.
 
 <div align="center">
 
@@ -53,7 +52,7 @@ This repository holds the project website. It tells the story in four parts: the
 - **A block made live in your browser.** The scroll animation is drawn in WebGL from code, with no video and no image files.
 - **Real plastic types.** Carry bag film, milk pouch film and bottle caps go into the mix, each named on screen with its plastic type.
 - **Honest economics.** The price chart shows where Ittige loses to clay, and what would have to change for it to win.
-- **Static and fast.** The site exports to plain files, so it deploys to Vercel or Netlify with no server.
+- **Static and fast.** The site exports to plain files, so it deploys to Vercel with no server.
 - **Responsive.** The layout and the camera both adapt to phones, laptops and classroom projectors.
 
 ## The animation
@@ -127,7 +126,7 @@ A red clay brick in Mysuru is listed at about Rs 10. Ittige matches clay only if
 | UI | React 18 |
 | 3D | Three.js (plain WebGL, no extra wrappers) |
 | Styling | Plain CSS, system fonts |
-| Hosting | Vercel or Netlify |
+| Hosting | Vercel |
 
 </div>
 
@@ -150,11 +149,7 @@ npm run build      # writes the site to the out/ folder
 
 ## Deployment
 
-**Vercel.** Import the repository on vercel.com. No settings are needed, because Next.js is detected automatically.
-
-**Netlify.** Import the repository on netlify.com. The build command (`npm run build`) and publish directory (`out`) are already set in `netlify.toml`.
-
-Both hosts redeploy on every push to the main branch.
+Import the repository on [vercel.com](https://vercel.com/new). No settings are needed, because Vercel detects Next.js automatically. Every push to the main branch redeploys the site.
 
 ## Project structure
 
@@ -167,14 +162,12 @@ ittige/
 ├── components/
 │   └── BrickScene.jsx      the scroll-driven 3D animation
 ├── docs/                   images used by this README
-├── public/team/            team photos go here
-├── netlify.toml            Netlify build settings
 └── next.config.js          static export settings
 ```
 
 ## Customising
 
-- **Team photos, roles and links:** edit the `TEAM` list at the top of `app/page.jsx`. Put photos in `public/team/` and use paths such as `/team/name.jpg`.
+- **Team names and USNs:** edit the `TEAM` list at the top of `app/page.jsx`. Only names and USNs are shown, by choice.
 - **Animation captions and the materials legend:** edit `CAP` and `MATS` in `components/BrickScene.jsx`.
 - **Numbers and text:** edit `app/page.jsx`. If the report changes, update the page to match.
 - **Colours:** change the variables at the top of `app/globals.css`.
@@ -183,7 +176,7 @@ ittige/
 
 <div align="center">
 
-| Name | Register number |
+| Name | USN |
 |:---:|:---:|
 | Abhishek Rai A | 24SEAI003 |
 | Akshay S Bharadwaj | 24SEAI005 |
@@ -201,5 +194,5 @@ Ittige is an academic business plan. Figures come from published sources listed 
 
 <div align="center">
 <br>
-<sub>Built with Next.js and Three.js</sub>
+<sub>Built with Next.js and Three.js by <a href="https://portfolio-abhirai2006.lovable.app/">Abhishek Rai A</a> | <a href="https://portfolio-abhirai2006.lovable.app/">Portfolio</a></sub>
 </div>

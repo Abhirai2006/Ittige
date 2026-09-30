@@ -2,12 +2,12 @@
 import {useEffect,useRef,useState} from 'react';
 import dynamic from 'next/dynamic';
 const BrickScene=dynamic(()=>import('../components/BrickScene'),{ssr:false});
-// EDIT HERE: add photo paths (put files in public/team, e.g. '/team/abhishek.jpg'), roles and links
+// Team cards show name and USN only
 const TEAM=[
- {name:'Abhishek Rai A',reg:'24SEAI003',photo:'',role:'',links:[]},
- {name:'Akshay S Bharadwaj',reg:'24SEAI005',photo:'',role:'',links:[]},
- {name:'Faabid Faizal',reg:'24SEAI026',photo:'',role:'',links:[]},
- {name:'Nirmitha D',reg:'24SEAI051',photo:'',role:'',links:[]}];
+ {name:'Abhishek Rai A',usn:'24SEAI003'},
+ {name:'Akshay S Bharadwaj',usn:'24SEAI005'},
+ {name:'Faabid Faizal',usn:'24SEAI026'},
+ {name:'Nirmitha D',usn:'24SEAI051'}];
 const BARS=[['Fly ash brick',7,'m'],['Red clay brick',10,'m'],['Cement brick (small)',14,'m'],['Ittige low case',10.3,'i'],['Ittige base case',15.2,'i'],['Ittige high case',23.8,'i']];
 function Count({to,dec=0,suffix=''}){const [v,setV]=useState(0),ref=useRef(null);
  useEffect(()=>{const io=new IntersectionObserver(([e])=>{if(!e.isIntersecting)return;io.disconnect();const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1400);setV(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);};requestAnimationFrame(f);},{threshold:.4});io.observe(ref.current);return()=>io.disconnect();},[to]);
@@ -26,6 +26,7 @@ export default function Page(){
    <div className="chart">{BARS.map(([n,v,k],i)=><div className="row rv" key={n} style={{'--d':i*90+'ms'}}><span>{n}</span><div className="track"><i className={k} style={{'--w':(v/24*100)+'%'}}/><em>Rs {v}</em></div></div>)}</div>
    <p className="src">Market: Mysuru dealer listing and a price tracker. Ittige: our model with labelled assumptions. Ittige matches clay only if plastic is nearly free or the city pays to have it taken.</p></section>
   <section className="sec alt"><h2 className="rv">Why packaging film, not bottles</h2><div className="two"><div className="card rv"><h3>Bottles (PET)</h3><p>About 90% are already collected and collectors are paid for them. PET also bonded worse with sand than LDPE in one study.</p></div><div className="card hot rv"><h3>Film and caps</h3><p>Carry bags and milk pouches are LDPE film, and caps are PP or HDPE. Low value, often no buyer, and they bind well with sand when melted. Layered sachets stay out until tested. The bottle in the animation is only a hook.</p></div></div></section>
-  <section className="sec"><h2 className="rv">The team</h2><div className="team">{TEAM.map(t=><div className="card tm rv" key={t.reg}>{t.photo?<img src={t.photo} alt={t.name}/>:<div className="ph">Photo</div>}<h3>{t.name}</h3><p>{t.reg}</p>{t.role&&<p>{t.role}</p>}{t.links.map(l=><a key={l.href} href={l.href} target="_blank" rel="noreferrer">{l.label}</a>)}</div>)}</div></section>
+  <section className="sec"><h2 className="rv">The team</h2><div className="team">{TEAM.map(t=><div className="card tm rv" key={t.usn}><h3>{t.name}</h3><p>USN: {t.usn}</p></div>)}</div></section>
+  <section className="folio"><div className="box rv"><div><p className="eyebrow2">Built by</p><h2>Abhishek Rai A</h2><p>Designed and built by Abhishek Rai A. See more of his projects in the portfolio.</p></div><a className="btn2" href="https://portfolio-abhirai2006.lovable.app/" target="_blank" rel="noreferrer">Portfolio <span>→</span></a></div></section>
   <footer className="foot"><p>Ittige is a course business plan. Every figure is cited in the report or labelled as an assumption. University of Mysore School of Engineering, Mysuru.</p></footer>
  </main>);}
