@@ -194,5 +194,5 @@ Ittige is an academic business plan. Figures come from published sources listed 
 
 <div align="center">
 <br>
-<sub>Built with Next.js and Three.js by <a href="https://portfolio-abhirai2006.lovable.app/">Abhishek Rai A</a> | <a href="https://portfolio-abhirai2006.lovable.app/">Portfolio</a></sub>
+<sub>Built with Next.js and Three.js by <a href="https://github.com/Abhirai2006">Abhishek Rai A</a> | <a href="https://portfolio-abhirai2006.lovable.app/">Portfolio</a></sub>
 </div>
