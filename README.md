@@ -184,7 +184,7 @@ ittige/
 | Nirmitha D | 24SEAI051 |
 
 Department of Artificial Intelligence and Machine Learning
-University of Mysore School of Engineering, Mysuru
+Mysore University School of Engineering, Mysuru
 
 </div>
 
