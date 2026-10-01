@@ -35,7 +35,7 @@
 
 ## About
 
-**Ittige** (Kannada for *brick*) is a social enterprise business plan for a small unit in Mysuru that turns low-value plastic packaging into pavers and solid blocks for compound walls. It was developed for the course *Management and Entrepreneurship* (21AI51) at the University of Mysore School of Engineering.
+**Ittige** (Kannada for *brick*) is a social enterprise business plan for a small unit in Mysuru that turns low-value plastic packaging into pavers and solid blocks for compound walls. It was developed for the course *Management and Entrepreneurship* (21AI51) at the Mysore University School of Engineering.
 
 This repository holds the project website, live at **[ittige.vercel.app](https://ittige.vercel.app/)**. It tells the story in four parts: the waste problem, how a block is made, the honest cost numbers, and the team. Every figure on the site is either cited in the accompanying report or labelled there as an assumption.
 
@@ -194,5 +194,5 @@ Ittige is an academic business plan. Figures come from published sources listed 
 
 <div align="center">
 <br>
-<sub>Built with Next.js and Three.js by <a href="https://github.com/Abhirai2006">Abhishek Rai A</a> | <a href="https://portfolio-abhirai2006.lovable.app/">Portfolio</a></sub>
+<sub>Built with Next.js and Three.js</sub>
 </div>
