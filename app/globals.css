@@ -37,5 +37,11 @@ h1,h2,h3{font-family:Georgia,Cambria,'Times New Roman',serif;line-height:1.1;mar
 
 .legend{position:absolute;left:5vw;top:8vh;max-width:min(300px,88vw);background:rgba(255,255,255,.92);border-radius:14px;padding:14px 18px;font-size:.9rem;box-shadow:0 8px 30px rgba(0,0,0,.12)}.legend h4{margin:0 0 6px;font:700 1.05rem Georgia,serif}.legend div{display:flex;align-items:center;gap:10px;margin:6px 0}.legend i{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.25);flex:none}.legend span{margin-left:auto;padding-left:10px;color:var(--mute);text-align:right}.legend p{margin:8px 0 0;font-size:.8rem;color:var(--mute)}
 
-.chip{position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:8px;background:rgba(43,39,36,.92);color:#fff;font-size:.78rem;padding:7px 14px;border-radius:999px;text-decoration:none;transition:background .2s}
-.chip:before{content:'';width:7px;height:7px;border-radius:50%;background:#e0674a}.chip:hover{background:var(--red)}
+.nm{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left;display:inline-flex;align-items:center}
+.nm i{width:8px;height:8px;border-right:2px solid var(--red);border-bottom:2px solid var(--red);transform:rotate(45deg) translateY(-2px);margin-left:12px;transition:transform .3s}
+.links{display:flex;flex-wrap:wrap;gap:8px;max-height:0;opacity:0;overflow:hidden;visibility:hidden;transform:translateY(-6px);transition:max-height .35s ease,opacity .3s ease,transform .3s ease,margin .3s ease,visibility 0s linear .35s}
+.tm[data-open="1"] .links{max-height:140px;opacity:1;visibility:visible;transform:none;margin-top:14px;transition-delay:0s}
+.tm[data-open="1"] .nm i{transform:rotate(225deg) translateY(-2px)}
+@media(hover:hover){.tm.has:hover .links{max-height:140px;opacity:1;visibility:visible;transform:none;margin-top:14px;transition-delay:0s}.tm.has:hover .nm i{transform:rotate(225deg) translateY(-2px)}}
+.links a{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;padding:7px 14px;border-radius:999px;font-size:.85rem;font-weight:700;text-decoration:none;transition:background .2s}
+.links a:hover,.links a:focus-visible{background:var(--dark)}

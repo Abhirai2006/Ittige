@@ -53,6 +53,7 @@ This repository holds the project website, live at **[ittige.vercel.app](https:/
 - **Real plastic types.** Carry bag film, milk pouch film and bottle caps go into the mix, each named on screen with its plastic type.
 - **Honest economics.** The price chart shows where Ittige loses to clay, and what would have to change for it to win.
 - **Static and fast.** The site exports to plain files, so it deploys to Vercel with no server.
+- **Hidden team links.** Each teammate's links appear only when a visitor hovers over or clicks the name.
 - **Responsive.** The layout and the camera both adapt to phones, laptops and classroom projectors.
 
 ## The animation
@@ -167,7 +168,7 @@ ittige/
 
 ## Customising
 
-- **Team names and USNs:** edit the `TEAM` list at the top of `app/page.jsx`. Only names and USNs are shown, by choice.
+- **Team names, USNs and links:** edit the `TEAM` list at the top of `app/page.jsx`. Names and USNs are always shown. A member's GitHub, LinkedIn and portfolio links stay hidden until a visitor hovers over or clicks the name. A member with an empty `links` list shows no links.
 - **Animation captions and the materials legend:** edit `CAP` and `MATS` in `components/BrickScene.jsx`.
 - **Numbers and text:** edit `app/page.jsx`. If the report changes, update the page to match.
 - **Colours:** change the variables at the top of `app/globals.css`.

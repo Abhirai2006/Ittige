@@ -2,12 +2,18 @@
 import {useEffect,useRef,useState} from 'react';
 import dynamic from 'next/dynamic';
 const BrickScene=dynamic(()=>import('../components/BrickScene'),{ssr:false});
-// Team cards show name and USN only
+// Team cards: name and USN show by default. Links appear on hover or click, only if listed here.
 const TEAM=[
- {name:'Abhishek Rai A',usn:'24SEAI003'},
- {name:'Akshay S Bharadwaj',usn:'24SEAI005'},
- {name:'Faabid Faizal',usn:'24SEAI026'},
- {name:'Nirmitha D',usn:'24SEAI051'}];
+ {name:'Abhishek Rai A',usn:'24SEAI003',links:[{label:'GitHub',href:'https://github.com/Abhirai2006'},{label:'LinkedIn',href:'https://www.linkedin.com/in/abhishek-rai-a-00067238b/'},{label:'Portfolio',href:'https://portfolio-abhirai2006.lovable.app/'}]},
+ {name:'Akshay S Bharadwaj',usn:'24SEAI005',links:[{label:'GitHub',href:'https://github.com/10ASB'},{label:'LinkedIn',href:'https://www.linkedin.com/in/akshay-s-bharadwaj-71979b311/'}]},
+ {name:'Faabid Faizal',usn:'24SEAI026',links:[{label:'LinkedIn',href:'https://www.linkedin.com/in/faabid-faizal-b57088426/'}]},
+ {name:'Nirmitha D',usn:'24SEAI051',links:[]}];
+function Member({t}){const [open,setOpen]=useState(false),has=t.links.length>0;
+ return(<div className={'card tm rv'+(has?' has':'')} data-open={open?'1':'0'}>
+  <h3>{has?<button type="button" className="nm" aria-expanded={open} onClick={()=>setOpen(o=>!o)}>{t.name}<i aria-hidden="true"/></button>:t.name}</h3>
+  <p>USN: {t.usn}</p>
+  {has&&<div className="links">{t.links.map(l=><a key={l.href} href={l.href} target="_blank" rel="noreferrer">{l.label}<span aria-hidden="true">{'\u2197'}</span></a>)}</div>}
+ </div>);}
 const BARS=[['Fly ash brick',7,'m'],['Red clay brick',10,'m'],['Cement brick (small)',14,'m'],['Ittige low case',10.3,'i'],['Ittige base case',15.2,'i'],['Ittige high case',23.8,'i']];
 function Count({to,dec=0,suffix=''}){const [v,setV]=useState(0),ref=useRef(null);
  useEffect(()=>{const io=new IntersectionObserver(([e])=>{if(!e.isIntersecting)return;io.disconnect();const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1400);setV(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);};requestAnimationFrame(f);},{threshold:.4});io.observe(ref.current);return()=>io.disconnect();},[to]);
@@ -26,6 +32,5 @@ export default function Page(){
    <div className="chart">{BARS.map(([n,v,k],i)=><div className="row rv" key={n} style={{'--d':i*90+'ms'}}><span>{n}</span><div className="track"><i className={k} style={{'--w':(v/24*100)+'%'}}/><em>Rs {v}</em></div></div>)}</div>
    <p className="src">Market: Mysuru dealer listing and a price tracker. Ittige: our model with labelled assumptions. Ittige matches clay only if plastic is nearly free or the city pays to have it taken.</p></section>
   <section className="sec alt"><h2 className="rv">Why packaging film, not bottles</h2><div className="two"><div className="card rv"><h3>Bottles (PET)</h3><p>About 90% are already collected and collectors are paid for them. PET also bonded worse with sand than LDPE in one study.</p></div><div className="card hot rv"><h3>Film and caps</h3><p>Carry bags and milk pouches are LDPE film, and caps are PP or HDPE. Low value, often no buyer, and they bind well with sand when melted. Layered sachets stay out until tested. The bottle in the animation is only a hook.</p></div></div></section>
-  <section className="sec"><h2 className="rv">The team</h2><div className="team">{TEAM.map(t=><div className="card tm rv" key={t.usn}><h3>{t.name}</h3><p>USN: {t.usn}</p></div>)}</div></section>
-  <a className="chip" href="https://portfolio-abhirai2006.lovable.app/" target="_blank" rel="noreferrer">Portfolio | Abhishek Rai</a>
+  <section className="sec"><h2 className="rv">The team</h2><div className="team">{TEAM.map(t=><Member key={t.usn} t={t}/>)}</div></section>
  </main>);}
