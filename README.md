@@ -52,6 +52,7 @@ This repository holds the project website, live at **[ittige.vercel.app](https:/
 - **A block made live in your browser.** The scroll animation is drawn in WebGL from code, with no video and no image files.
 - **Real plastic types.** Carry bag film, milk pouch film and bottle caps go into the mix, each named on screen with its plastic type.
 - **Honest economics.** The price chart shows where Ittige loses to clay, and what would have to change for it to win.
+- **Share card and icons.** A link pasted into WhatsApp or social media shows a preview card (`public/og.png`), and the browser tab has a brick icon (`app/icon.svg`).
 - **Static and fast.** The site exports to plain files, so it deploys to Vercel with no server.
 - **Hidden team links.** Each teammate's links appear only when a visitor hovers over or clicks the name.
 - **Responsive.** The layout and the camera both adapt to phones, laptops and classroom projectors.
@@ -99,7 +100,9 @@ Technical notes:
 - The brick surface texture is generated on a canvas at load time. The repository contains no image assets for the scene.
 - Flakes, caps and sand use instanced meshes, so about 550 pieces cost very little to draw.
 - The pixel ratio is capped at 2 to keep phones smooth.
-- The camera distance adapts to screen shape, so the mould stays in frame on narrow screens.
+- The camera distance adapts to screen shape, so the mould stays in frame on narrow screens and the furnace stays in frame on wide and 4:3 screens.
+- The animation canvas carries a text description that updates with each step, and the caption is announced politely to screen readers.
+- The stat counters start at their final values, so a print or preview never shows zeros. The count-up only plays when a counter scrolls into view, and not at all for visitors who prefer reduced motion.
 
 ## The numbers
 
@@ -159,10 +162,13 @@ ittige/
 ├── app/
 │   ├── layout.jsx          page metadata
 │   ├── page.jsx            sections: hero, problem, numbers, team
-│   └── globals.css         styles and reveal animations
+│   ├── globals.css         styles and reveal animations
+│   ├── icon.svg            browser tab icon
+│   └── apple-icon.png      iPhone home screen icon
 ├── components/
 │   └── BrickScene.jsx      the scroll-driven 3D animation
 ├── docs/                   images used by this README
+├── public/og.png           share preview image (1200 x 630)
 └── next.config.js          static export settings
 ```
 
