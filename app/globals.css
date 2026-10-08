@@ -45,3 +45,4 @@ h1,h2,h3{font-family:Georgia,Cambria,'Times New Roman',serif;line-height:1.1;mar
 @media(hover:hover){.tm.has:hover .links{max-height:140px;opacity:1;visibility:visible;transform:none;margin-top:14px;transition-delay:0s}.tm.has:hover .nm i{transform:rotate(225deg) translateY(-2px)}}
 .links a{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;padding:7px 14px;border-radius:999px;font-size:.85rem;font-weight:700;text-decoration:none;transition:background .2s}
 .links a:hover,.links a:focus-visible{background:var(--dark)}
+@media(max-width:700px){.legend{left:10px;right:10px;top:12px;max-width:none;padding:8px 12px;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:.72rem}.legend h4,.legend p{display:none}.legend div{margin:0;gap:6px}.legend i{width:12px;height:12px}.legend span{margin-left:2px;padding-left:0}}
