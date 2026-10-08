@@ -1,7 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
-const G=9.8,W=1.84,H0=0.85,HB=0.6,D=0.88,BASE=0.12,FX=4.6;
+const G=9.8,W=1.84,H0=0.85,HB=0.6,D=0.88,BASE=0.12,FX=4.2;
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const ease=x=>x*x*(3-2*x);
 const seg=(p,a,b)=>clamp((p-a)/(b-a));
@@ -61,7 +61,7 @@ export default function BrickScene(){
   const dm=new THREE.Object3D(),white=new THREE.Color(0xffffff),hot=new THREE.Color(0xff7a1a),sand=new THREE.Color(0xc9b28a),dark=new THREE.Color(0x5a4636);
   const TH=[0,.18,.34,.5,.66,.78,.9];let lastStage=-1;
   function update(p,clock){
-   const camX=2.3*ease(seg(p,.46,.56))-2.3*ease(seg(p,.82,.92)),dist=Math.max(11.5,10.5/cam.aspect);
+   const pan=FX*(cam.aspect<1.2?.9:.5),camX=pan*ease(seg(p,.5,.62))-pan*ease(seg(p,.84,.93)),dist=Math.max(12.3,10.5/cam.aspect,cam.aspect>=1.2?6.5/(0.3057*cam.aspect):0);
    cam.position.set(camX,2.6,dist);cam.lookAt(camX,2.1,0);
    B.position.x=FX*ease(seg(p,.5,.62))-FX*ease(seg(p,.84,.93));
    const t0=seg(p,0,.17)*1.9;bottle.position.y=drop(6.6,BASE+.3,t0,.3);bottle.rotation.z=(Math.PI/2)*ease(clamp((t0-.7)/.55));
@@ -93,8 +93,8 @@ export default function BrickScene(){
   addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',resize);resize();onScroll();cur=target;loop();
   return()=>{cancelAnimationFrame(raf);removeEventListener('scroll',onScroll);removeEventListener('resize',resize);R.dispose();};
  },[]);
- return(<section ref={wrapRef} className="scene" id="build" style={{height:'760vh'}}><div className="stick"><canvas ref={cv}/>
-  <div className="cap"><span>{stage+1} / 7</span><h3>{CAP[stage][0]}</h3><p>{CAP[stage][1]}</p></div>
+ return(<section ref={wrapRef} className="scene" id="build" style={{height:'760vh'}}><div className="stick"><canvas ref={cv} role="img" aria-label={`Animated scene, step ${stage+1} of 7: ${CAP[stage][0]}. ${CAP[stage][1]}`}/>
+  <div className="cap" aria-live="polite"><span>{stage+1} / 7</span><h3>{CAP[stage][0]}</h3><p>{CAP[stage][1]}</p></div>
   {stage>=1&&stage<=3&&<div className="legend"><h4>Going into the mix</h4>{MATS.map(m=><div key={m[0]}><i style={{background:m[2]}}/><b>{m[0]}</b><span>{m[1]}</span></div>)}<p>Screened out: PVC, and layered sachets until tested.</p></div>}
   <div className="bar"><i ref={bar}/></div><p className="note">Drawn live in your browser from code. No video, no photo.</p></div></section>);
 }
