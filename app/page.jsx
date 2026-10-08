@@ -15,14 +15,14 @@ function Member({t}){const [open,setOpen]=useState(false),has=t.links.length>0;
   {has&&<div className="links">{t.links.map(l=><a key={l.href} href={l.href} target="_blank" rel="noreferrer">{l.label}<span aria-hidden="true">{'\u2197'}</span></a>)}</div>}
  </div>);}
 const BARS=[['Fly ash brick',7,'m'],['Red clay brick',10,'m'],['Cement brick (small)',14,'m'],['Ittige low case',10.3,'i'],['Ittige base case',15.2,'i'],['Ittige high case',23.8,'i']];
-function Count({to,dec=0,suffix=''}){const [v,setV]=useState(0),ref=useRef(null);
- useEffect(()=>{const io=new IntersectionObserver(([e])=>{if(!e.isIntersecting)return;io.disconnect();const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1400);setV(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);};requestAnimationFrame(f);},{threshold:.4});io.observe(ref.current);return()=>io.disconnect();},[to]);
+function Count({to,dec=0,suffix=''}){const [v,setV]=useState(to),ref=useRef(null);
+ useEffect(()=>{const io=new IntersectionObserver(([e])=>{if(!e.isIntersecting)return;io.disconnect();if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1400);setV(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);};requestAnimationFrame(f);},{threshold:.1});io.observe(ref.current);return()=>io.disconnect();},[to]);
  return <span ref={ref}>{v.toLocaleString('en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec})}{suffix}</span>;}
 export default function Page(){
  useEffect(()=>{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.25});document.querySelectorAll('.rv').forEach(n=>io.observe(n));return()=>io.disconnect();},[]);
  return(<main>
   <header className="hero"><div className="bricks" aria-hidden="true">{Array.from({length:40}).map((_,i)=><b key={i} style={{'--i':i,'--r':Math.floor(i/5)}}/>)}</div>
-   <div className="hin"><p className="eyebrow">Management and Entrepreneurship | Social Entrepreneurship</p><h1>Ittige</h1><p className="sub">Turning Mysuru's plastic waste into pavers and blocks.</p><a className="btn" href="#build">Watch a block being made</a></div></header>
+   <div className="hin"><p className="eyebrow">Management and Entrepreneurship | Social Entrepreneurship</p><h1>Ittige</h1><p className="sub">Turning Mysuru's plastic waste into pavers and solid blocks.</p><a className="btn" href="#build">Watch a block being made</a></div></header>
   <section className="sec"><h2 className="rv">Mysuru makes about 550 tonnes of waste every day</h2>
    <div className="stats">{[[550,0,'','tonnes of solid waste per day'],[248,0,'','tonnes of it is dry waste'],[4.1,1,' million','tonnes of plastic waste in India in 2020-21']].map((s,i)=>
     <div className="card rv" key={i} style={{'--d':i*120+'ms'}}><strong><Count to={s[0]} dec={s[1]} suffix={s[2]}/></strong><span>{s[3]}</span></div>)}</div>
