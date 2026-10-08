@@ -52,6 +52,7 @@ This repository holds the project website, live at **[ittige.vercel.app](https:/
 - **A block made live in your browser.** The scroll animation is drawn in WebGL from code, with no video and no image files.
 - **Real plastic types.** Carry bag film, milk pouch film and bottle caps go into the mix, each named on screen with its plastic type.
 - **Honest economics.** The price chart shows where Ittige loses to clay, and what would have to change for it to win.
+- **A live cost calculator.** Visitors drag the price of plastic (even below zero, to see what a city payment would do) and watch the cost of one brick change against clay, fly ash and cement bricks. It runs the same model as the report, and the preset buttons reproduce the report's low, base and high cases.
 - **Share card and icons.** A link pasted into WhatsApp or social media shows a preview card (`public/og.png`), and the browser tab has a brick icon (`app/icon.svg`).
 - **Static and fast.** The site exports to plain files, so it deploys to Vercel with no server.
 - **Hidden team links.** Each teammate's links appear only when a visitor hovers over or clicks the name.
@@ -161,12 +162,15 @@ Import the repository on [vercel.com](https://vercel.com/new). No settings are n
 ittige/
 ├── app/
 │   ├── layout.jsx          page metadata
-│   ├── page.jsx            sections: hero, problem, numbers, team
+│   ├── page.jsx            sections: hero, problem, numbers, calculator, team
 │   ├── globals.css         styles and reveal animations
 │   ├── icon.svg            browser tab icon
 │   └── apple-icon.png      iPhone home screen icon
 ├── components/
-│   └── BrickScene.jsx      the scroll-driven 3D animation
+│   ├── BrickScene.jsx      the scroll-driven 3D animation
+│   └── Calculator.jsx      the live cost calculator
+├── lib/
+│   └── model.js            the pilot cost model (same as the report)
 ├── docs/                   images used by this README
 ├── public/og.png           share preview image (1200 x 630)
 └── next.config.js          static export settings
@@ -175,6 +179,7 @@ ittige/
 ## Customising
 
 - **Team names, USNs and links:** edit the `TEAM` list at the top of `app/page.jsx`. Names and USNs are always shown. A member's GitHub, LinkedIn and portfolio links stay hidden until a visitor hovers over or clicks the name. A member with an empty `links` list shows no links.
+- **Calculator assumptions:** the clay price, daily costs and brick weight are constants at the top of `lib/model.js`. Change them there if the report changes.
 - **Animation captions and the materials legend:** edit `CAP` and `MATS` in `components/BrickScene.jsx`.
 - **Numbers and text:** edit `app/page.jsx`. If the report changes, update the page to match.
 - **Colours:** change the variables at the top of `app/globals.css`.
