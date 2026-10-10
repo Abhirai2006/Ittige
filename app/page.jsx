@@ -3,6 +3,8 @@ import {useEffect,useRef,useState} from 'react';
 import dynamic from 'next/dynamic';
 import Calculator from '../components/Calculator';
 import Effects from '../components/Effects';
+import Swarm from '../components/Swarm';
+import ScrollWords from '../components/ScrollWords';
 const BrickScene=dynamic(()=>import('../components/BrickScene'),{ssr:false});
 // Team cards: name and USN show by default. Links appear on hover or click, only if listed here.
 const TEAM=[
@@ -32,7 +34,9 @@ export default function Page(){
    <div className="stats">{[[550,0,'','tonnes of solid waste per day'],[248,0,'','tonnes of it is dry waste'],[4.1,1,' million','tonnes of plastic waste in India in 2020-21']].map((s,i)=>
     <div className="card rv" key={i} style={{'--d':i*120+'ms'}}><strong><Count to={s[0]} dec={s[1]} suffix={s[2]}/></strong><span>{s[3]}</span></div>)}</div>
    <p className="src">Sources: Mysuru City Corporation officer in Deccan Herald; CPCB data via PIB. Full links are in the report.</p></section>
+  <section className="sec manifesto"><ScrollWords text="Bottles get picked up and sold. Thin plastic film does not, so it ends up in dumps and drains. Ittige is a plan to turn that film into a block, and to say honestly where the plan is weak."/></section>
   <BrickScene/>
+  <Swarm/>
   <section className="sec"><h2 className="rv">The honest numbers</h2><p className="lead rv">A red clay brick in Mysuru is listed at about Rs 10. Our pilot model gives Rs 10 to Rs 24, depending on what we pay for plastic.</p>
    <div className="chart">{BARS.map(([n,v,k],i)=><div className="row rv" key={n} style={{'--d':i*90+'ms'}}><span>{n}</span><div className="track"><i className={k} style={{'--w':(v/24*100)+'%'}}/><em>Rs {v}</em></div></div>)}</div>
    <p className="src">Market: Mysuru dealer listing and a price tracker. Ittige: our model with labelled assumptions. Ittige matches clay only if plastic is nearly free or the city pays to have it taken.</p></section>
