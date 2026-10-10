@@ -3,7 +3,7 @@ import {useEffect,useRef} from 'react';
 const COL=['#b5432a','#e0a526','#2b2724','#f6e3dd','#9e3720'];
 const TILT='.card:not(.calc-ctl):not(.calc-out)';
 export default function Effects(){
- const bar=useRef(null),glow=useRef(null),cv=useRef(null);
+ const bar=useRef(null),cv=useRef(null);
  useEffect(()=>{
   const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
@@ -11,20 +11,17 @@ export default function Effects(){
   onScroll();addEventListener('scroll',onScroll,{passive:true});
   const off=[()=>removeEventListener('scroll',onScroll)];
   if(fine&&!rm){
-   let tx=innerWidth/2,ty=innerHeight/2,x=tx,y=ty,raf=0,cur=null;
-   const loop=()=>{x+=(tx-x)*.12;y+=(ty-y)*.12;if(glow.current)glow.current.style.transform='translate3d('+(x-260)+'px,'+(y-260)+'px,0)';raf=requestAnimationFrame(loop);};
-   raf=requestAnimationFrame(loop);
+   let cur=null;
    const reset=el=>{if(!el)return;el.classList.remove('tilt');el.style.removeProperty('--rx');el.style.removeProperty('--ry');};
    const move=e=>{
-    tx=e.clientX;ty=e.clientY;if(glow.current)glow.current.style.opacity=1;
     const el=e.target.closest&&e.target.closest(TILT);
     if(el!==cur){reset(cur);cur=el;}
     if(el){const r=el.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
      el.classList.add('tilt');el.style.setProperty('--rx',((.5-py)*8).toFixed(2)+'deg');el.style.setProperty('--ry',((px-.5)*10).toFixed(2)+'deg');el.style.setProperty('--gx',(px*100)+'%');el.style.setProperty('--gy',(py*100)+'%');}
    };
-   const leave=()=>{reset(cur);cur=null;if(glow.current)glow.current.style.opacity=0;};
+   const leave=()=>{reset(cur);cur=null;};
    addEventListener('pointermove',move,{passive:true});document.addEventListener('pointerleave',leave);
-   off.push(()=>{cancelAnimationFrame(raf);removeEventListener('pointermove',move);document.removeEventListener('pointerleave',leave);});
+   off.push(()=>{removeEventListener('pointermove',move);document.removeEventListener('pointerleave',leave);});
   }
   if(!rm){
    let parts=[],raf=0;
@@ -45,7 +42,6 @@ export default function Effects(){
  },[]);
  return(<>
   <div className="prog" aria-hidden="true"><i ref={bar}/></div>
-  <div className="glow" ref={glow} aria-hidden="true"/>
   <canvas className="confetti" ref={cv} aria-hidden="true"/>
  </>);
 }
