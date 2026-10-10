@@ -213,7 +213,7 @@ Ittige is an academic business plan. Figures come from published sources listed 
 
 - A progress bar at the top shows how far down the page you are.
 - The hero title letters pop in one by one, with floating sticker tags and a scrolling facts ticker below it.
-- Cards tilt towards the pointer with a soft glare, and a faint glow follows the cursor on desktop.
+- Cards tilt towards the pointer with a soft glare.
 - Section headings draw an underline when they scroll into view, and the chart bars carry a moving shine.
 - In the calculator, the cost number pops on every change, and a burst of brick-shaped confetti fires when your settings bring an Ittige brick down to the price of clay.
 - Pointer effects are switched off on touch screens, and every animation stops for visitors who ask their device for reduced motion.
