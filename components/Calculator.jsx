@@ -1,5 +1,5 @@
 'use client';
-import {useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {model,breakEven,CLAY,OTHER_DAILY} from '../lib/model';
 const f2=x=>x.toFixed(2);
 const inr=x=>Math.round(x).toLocaleString('en-IN');
@@ -13,6 +13,8 @@ export default function Calculator(){
  const priceLabel=plastic>0?`Ittige pays Rs ${f2(plastic)} per kg`:plastic===0?'The plastic is free':`The city pays Ittige Rs ${f2(-plastic)} per kg`;
  const bars=[['Fly ash brick',7,'m'],['Red clay brick',CLAY,'m'],['Cement brick (small)',14,'m'],['Ittige, your settings',m.perBrick,'i']];
  const max=Math.max(24,m.perBrick+1);
+ const hit=m.perBrick<=CLAY+0.25,was=useRef(false);
+ useEffect(()=>{if(hit&&!was.current)window.dispatchEvent(new CustomEvent('ittige-confetti'));was.current=hit;},[hit]);
  const preset=(p,s)=>{setPlastic(p);setSand(s);setShare(0.3);setUp(false);};
  const toClay=()=>setPlastic(Math.max(-2,Math.min(20,Math.round(be*100)/100)));
  return(<section className="sec calc" id="calculator">
@@ -39,8 +41,8 @@ export default function Calculator(){
    </div>
    <div className="card calc-out" aria-live="polite">
     <p className="calc-small">Cost to make one brick</p>
-    <p className="calc-big">Rs {f2(m.perBrick)}</p>
-    <p className={'calc-verdict '+tone}>{verdict}</p>
+    <p key={f2(m.perBrick)} className="calc-big">Rs {f2(m.perBrick)}</p>
+    <p key={tone} className={'calc-verdict '+tone}>{verdict}</p>
     <div className="calc-bars">{bars.map(([n,v,k])=><div className="calc-row" key={n}><span>{n}</span><div className="calc-track"><i className={k} style={{width:Math.max(2,v/max*100)+'%'}}/><em>Rs {f2(v)}</em></div></div>)}</div>
     <div className="calc-parts"><div><b>Rs {f2(m.parts.plastic)}</b><span>plastic</span></div><div><b>Rs {f2(m.parts.sand)}</b><span>sand</span></div><div><b>Rs {f2(m.parts.other)}</b><span>other costs</span></div></div>
     <p className="calc-note">{be>=0?`With these settings Ittige can pay up to Rs ${f2(be)} per kg for plastic and still match clay.`:`With these settings the city would have to pay Ittige about Rs ${f2(-be)} per kg to take the plastic for Ittige to match clay.`}</p>
