@@ -13,11 +13,22 @@ function brickTex(){const c=document.createElement('canvas');c.width=c.height=51
  const base=['#9c8f80','#6d6359','#b3a18b','#7a7066','#5f574f'];for(let i=0;i<9000;i++){g.fillStyle=base[(r()*base.length)|0];const s=1+r()*3;g.fillRect(r()*512,r()*512,s,s);}
  const fl=['#c8412d','#ece8df','#3c6fa8','#d9a21b','#2f8f6b'];g.globalAlpha=.85;for(let i=0;i<220;i++){g.fillStyle=fl[(r()*fl.length)|0];g.beginPath();g.ellipse(r()*512,r()*512,2+r()*6,1+r()*3,r()*3,0,6.28);g.fill();}
  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.colorSpace=THREE.SRGBColorSpace;return t;}
-function museTex(w,h,fs){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.font='700 '+fs+'px Georgia,Cambria,serif';g.textBaseline='middle';
- const L='MUSE'.split(''),gap=fs*.18,ws=L.map(l=>g.measureText(l).width),tot=ws.reduce((a,b)=>a+b,0)+gap*3,x0=(w-tot)/2;
- const pass=(dx,dy,st)=>{let x=x0;g.fillStyle=st;L.forEach((l,i)=>{g.fillText(l,x+dx,h/2+dy);x+=ws[i]+gap;});};
- pass(3,3,'rgba(255,255,255,.4)');pass(-2,-2,'rgba(0,0,0,.4)');pass(0,0,'rgba(43,39,36,.92)');
- const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=4;return t;}
+function museTex(w,h,fs){
+ const mk=()=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
+ const L='MUSE'.split(''),m=mk().getContext('2d');m.font='700 '+fs+'px Georgia,Cambria,serif';
+ const gap=fs*.2,ws=L.map(l=>m.measureText(l).width),tot=ws.reduce((a,b)=>a+b,0)+gap*3,x0=(w-tot)/2;
+ const txt=(g,dx,dy)=>{g.font='700 '+fs+'px Georgia,Cambria,serif';g.textBaseline='middle';let x=x0;L.forEach((l,i)=>{g.fillText(l,x+dx,h/2+dy);x+=ws[i]+gap;});};
+ const c=mk(),g=c.getContext('2d');
+ g.fillStyle='rgba(28,22,18,.5)';txt(g,0,0);
+ const shade=(dx,dy,col)=>{const t=mk(),q=t.getContext('2d');q.fillStyle='#000';txt(q,0,0);q.globalCompositeOperation='destination-out';txt(q,dx,dy);
+  q.globalCompositeOperation='source-in';q.fillStyle=col;q.fillRect(0,0,w,h);g.drawImage(t,0,0);};
+ shade(fs*.025,fs*.025,'rgba(0,0,0,.75)');shade(-fs*.02,-fs*.02,'rgba(255,255,255,.4)');
+ const bc=mk(),b=bc.getContext('2d');b.fillStyle='#808080';b.fillRect(0,0,w,h);b.fillStyle='#202020';
+ try{b.filter='blur('+Math.round(fs*.02)+'px)';}catch(e){}
+ txt(b,0,0);
+ const map=new THREE.CanvasTexture(c),bump=new THREE.CanvasTexture(bc);map.colorSpace=THREE.SRGBColorSpace;map.anisotropy=bump.anisotropy=4;
+ return{map,bump,dispose(){map.dispose();bump.dispose();}};
+}
 const MATS=[['Carry bag film','LDPE','#ece8df'],['Milk pouch film','LDPE','#9fc4e0'],['Bottle caps','HDPE or PP','#c8412d'],['A few bottle flakes','PET, story only','#bfe3f2']];
 const CAP=[['A bottle drops','It falls under gravity and bounces once. The bottle is only our visual hook. The real feed is film and caps.'],['Shredded into flakes','Carry bags, milk pouches and bottle caps are sorted and shredded. Each piece flies, bounces and settles. A few bottle flakes are only for the story.'],['Sand joins the mix','About 70% sand by weight in our model. Sand grains fall and mix in with the plastic pieces.'],['Into the furnace','Heat melts the plastic so it coats the sand grains and becomes the binder.'],['Pressed','The hot mix is squeezed into shape. Watch it spring back a little.'],['Cooling','No kiln firing, no cement, no water in the mix. The mould opens.'],['One Ittige block','Stamped MUSE, for our school. Made from code, not a photo. Still to be lab tested before anything is sold.']];
 export default function BrickScene(){
@@ -44,8 +55,8 @@ export default function BrickScene(){
   const tex=brickTex();tex.repeat.set(2,1);
   const brickMat=std({map:tex,bumpMap:tex,bumpScale:1.2,roughness:.92,emissive:0xff5a00,emissiveIntensity:0});
   const slab=add(bx(1,1,1),brickMat,0,0,0,B);slab.visible=false;
-  const tTop=museTex(1024,478,300),tSide=museTex(1024,341,240);
-  const dec=t=>std({map:t,transparent:true,opacity:0,roughness:.9,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2});
+  const tTop=museTex(1024,478,210),tSide=museTex(1024,341,165);
+  const dec=t=>std({map:t.map,bumpMap:t.bump,bumpScale:3,transparent:true,opacity:0,roughness:.95,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2});
   const mTop=dec(tTop),mSide=dec(tSide),pg=new THREE.PlaneGeometry(1,1);
   const dTop=new THREE.Mesh(pg,mTop);dTop.rotation.x=-Math.PI/2;dTop.position.y=.503;
   const dFront=new THREE.Mesh(pg,mSide);dFront.position.z=.503;
