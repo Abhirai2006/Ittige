@@ -33,7 +33,7 @@ h1,h2,h3{font-family:Georgia,Cambria,'Times New Roman',serif;line-height:1.1;mar
 .note{position:absolute;left:5vw;bottom:2.5vh;margin:0;font-size:.8rem;color:var(--mute)}
 .tm h3{font-size:1.3rem}.tm p{margin:.2rem 0;color:var(--mute)}
 @media(max-width:700px){.row{grid-template-columns:1fr}.bricks{opacity:.35;width:100%}.hin{padding:0 24px}}
-@media(prefers-reduced-motion:reduce){.rv,.bricks b,.track i{transition:none;animation:none;transform:none;opacity:1;filter:none}.hero h1 span,.stickers span,.mt,.btn::before,.btn::after,.track i.i::after,.calc-big,.calc-verdict{animation:none!important}.glow,.confetti{display:none}.row .track i{width:var(--w)}}
+@media(prefers-reduced-motion:reduce){.rv,.bricks b,.track i{transition:none;animation:none;transform:none;opacity:1;filter:none}.hero h1 span,.stickers span,.mt,.btn::before,.btn::after,.track i.i::after,.calc-big,.calc-verdict{animation:none!important}.confetti{display:none}.row .track i{width:var(--w)}}
 
 .legend{position:absolute;left:5vw;top:8vh;max-width:min(300px,88vw);background:rgba(255,255,255,.92);border-radius:14px;padding:14px 18px;font-size:.9rem;box-shadow:0 8px 30px rgba(0,0,0,.12)}.legend h4{margin:0 0 6px;font:700 1.05rem Georgia,serif}.legend div{display:flex;align-items:center;gap:10px;margin:6px 0}.legend i{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.25);flex:none}.legend span{margin-left:auto;padding-left:10px;color:var(--mute);text-align:right}.legend p{margin:8px 0 0;font-size:.8rem;color:var(--mute)}
 
@@ -62,7 +62,6 @@ h1,h2,h3{font-family:Georgia,Cambria,'Times New Roman',serif;line-height:1.1;mar
 @media(max-width:800px){.calc-grid{grid-template-columns:1fr}.calc-row{grid-template-columns:1fr}.calc-big{font-size:3.4rem}}
 
 .prog{position:fixed;left:0;right:0;top:0;height:4px;z-index:60;pointer-events:none}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--red),#e0a526);transform-origin:left;transform:scaleX(0)}
-.glow{position:fixed;left:0;top:0;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(181,67,42,.2),transparent 65%);pointer-events:none;z-index:5;mix-blend-mode:multiply;opacity:0;transition:opacity .4s}
 .confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
 .hero h1{display:flex}.hero h1 span{display:inline-block;animation:pop .9s cubic-bezier(.2,1.7,.4,1) both;animation-delay:calc(var(--k)*80ms + 250ms)}
 @keyframes pop{from{opacity:0;transform:translateY(70px) rotate(-10deg) scale(.5)}to{opacity:1;transform:none}}
