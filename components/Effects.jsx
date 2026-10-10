@@ -20,10 +20,16 @@ export default function Effects(){
      el.classList.add('tilt');el.style.setProperty('--rx',((.5-py)*8).toFixed(2)+'deg');el.style.setProperty('--ry',((px-.5)*10).toFixed(2)+'deg');el.style.setProperty('--gx',(px*100)+'%');el.style.setProperty('--gy',(py*100)+'%');}
    };
    const leave=()=>{reset(cur);cur=null;};
+   const mag=e=>{document.querySelectorAll('.btn').forEach(b=>{const r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy;
+    if(Math.hypot(dx,dy)<110)b.style.translate=(dx*.22).toFixed(1)+'px '+(dy*.3).toFixed(1)+'px';else b.style.translate='';});};
+   addEventListener('pointermove',mag,{passive:true});off.push(()=>removeEventListener('pointermove',mag));
    addEventListener('pointermove',move,{passive:true});document.addEventListener('pointerleave',leave);
    off.push(()=>{removeEventListener('pointermove',move);document.removeEventListener('pointerleave',leave);});
   }
   if(!rm){
+   let lastY=scrollY,vel=0,sraf=0;
+   const sv=()=>{const y=scrollY;vel=vel*.9+Math.abs(y-lastY)*.35;lastY=y;const m=document.querySelector('.mt'),a=m&&m.getAnimations&&m.getAnimations()[0];if(a)a.playbackRate=1+Math.min(8,vel*.15);sraf=requestAnimationFrame(sv);};
+   sraf=requestAnimationFrame(sv);off.push(()=>cancelAnimationFrame(sraf));
    let parts=[],raf=0;
    const run=()=>{const c=cv.current;if(!c)return;const g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);
     parts=parts.filter(p=>p.l>0);
