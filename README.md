@@ -216,4 +216,7 @@ Ittige is an academic business plan. Figures come from published sources listed 
 - Cards tilt towards the pointer with a soft glare.
 - Section headings draw an underline when they scroll into view, and the chart bars carry a moving shine.
 - In the calculator, the cost number pops on every change, and a burst of brick-shaped confetti fires when your settings bring an Ittige brick down to the price of clay.
+- A "Play with 9,000 pieces of plastic" section: thousands of coloured flakes pull together into a brick, the words ITTIGE and MUSE, or a sphere, and scatter away from your pointer. It cycles by itself until you pick a shape. The idea comes from the particle simulator at particles.casberry.in.
+- A short statement above the 3D scene lights up word by word as you scroll, and the facts ticker speeds up when you scroll fast. Both ideas follow React Bits (Scroll Reveal and Scroll Velocity).
+- The main button leans towards the pointer when it gets close (after React Bits Magnet), and a very light film grain sits over the page.
 - Pointer effects are switched off on touch screens, and every animation stops for visitors who ask their device for reduced motion.
