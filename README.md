@@ -43,7 +43,7 @@ This repository holds the project website, live at **[ittige.vercel.app](https:/
 
 | Problem | Idea | Honesty |
 |:---:|:---:|:---:|
-| About **550 tonnes** of solid waste a day in Mysuru | Melted plastic binds sand into a block, with no kiln, water or cement | Ittige costs **Rs 10 to 24** per brick against about **Rs 10** for clay |
+| About **550 tonnes** of solid waste a day in Mysuru | Melted plastic binds sand into a block, with no kiln or cement and no water in the mix (the film is washed first) | Ittige costs **Rs 10 to 24** per brick against about **Rs 10** for clay |
 
 </div>
 
@@ -88,7 +88,7 @@ Scrolling moves a single progress value from 0 to 1, and the whole scene is a fu
 | *Not used* | PVC | Screened out at sorting |
 | *Not used* | Layered sachets | Kept out until tested |
 
-The bottle is kept as the opening image because everyone recognises it, but the real plan uses other plastic: PET bottles already have a collection market, and PET bonded worse with sand than LDPE in published work.
+The bottle is kept as the opening image because everyone recognises it, but the real plan uses other plastic: PET bottles already have a collection market, and studies disagree on whether PET or LDPE is stronger with sand.
 
 <div align="center">
 <img src="docs/process.png" alt="Process: sort and clean, shred, heat and mix with sand, press, cool and use" width="100%">
@@ -208,3 +208,12 @@ Ittige is an academic business plan. Figures come from published sources listed 
 <br>
 <sub>Built with Next.js and Three.js</sub>
 </div>
+
+## Motion and effects
+
+- A progress bar at the top shows how far down the page you are.
+- The hero title letters pop in one by one, with floating sticker tags and a scrolling facts ticker below it.
+- Cards tilt towards the pointer with a soft glare, and a faint glow follows the cursor on desktop.
+- Section headings draw an underline when they scroll into view, and the chart bars carry a moving shine.
+- In the calculator, the cost number pops on every change, and a burst of brick-shaped confetti fires when your settings bring an Ittige brick down to the price of clay.
+- Pointer effects are switched off on touch screens, and every animation stops for visitors who ask their device for reduced motion.
