@@ -13,8 +13,13 @@ function brickTex(){const c=document.createElement('canvas');c.width=c.height=51
  const base=['#9c8f80','#6d6359','#b3a18b','#7a7066','#5f574f'];for(let i=0;i<9000;i++){g.fillStyle=base[(r()*base.length)|0];const s=1+r()*3;g.fillRect(r()*512,r()*512,s,s);}
  const fl=['#c8412d','#ece8df','#3c6fa8','#d9a21b','#2f8f6b'];g.globalAlpha=.85;for(let i=0;i<220;i++){g.fillStyle=fl[(r()*fl.length)|0];g.beginPath();g.ellipse(r()*512,r()*512,2+r()*6,1+r()*3,r()*3,0,6.28);g.fill();}
  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.colorSpace=THREE.SRGBColorSpace;return t;}
+function museTex(w,h,fs){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.font='700 '+fs+'px Georgia,Cambria,serif';g.textBaseline='middle';
+ const L='MUSE'.split(''),gap=fs*.18,ws=L.map(l=>g.measureText(l).width),tot=ws.reduce((a,b)=>a+b,0)+gap*3,x0=(w-tot)/2;
+ const pass=(dx,dy,st)=>{let x=x0;g.fillStyle=st;L.forEach((l,i)=>{g.fillText(l,x+dx,h/2+dy);x+=ws[i]+gap;});};
+ pass(3,3,'rgba(255,255,255,.4)');pass(-2,-2,'rgba(0,0,0,.4)');pass(0,0,'rgba(43,39,36,.92)');
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=4;return t;}
 const MATS=[['Carry bag film','LDPE','#ece8df'],['Milk pouch film','LDPE','#9fc4e0'],['Bottle caps','HDPE or PP','#c8412d'],['A few bottle flakes','PET, story only','#bfe3f2']];
-const CAP=[['A bottle drops','It falls under gravity and bounces once. The bottle is only our visual hook. The real feed is film and caps.'],['Shredded into flakes','Carry bags, milk pouches and bottle caps are sorted and shredded. Each piece flies, bounces and settles. A few bottle flakes are only for the story.'],['Sand joins the mix','About 70% sand by weight in our model. Sand grains fall and mix in with the plastic pieces.'],['Into the furnace','Heat melts the plastic so it coats the sand grains and becomes the binder.'],['Pressed','The hot mix is squeezed into shape. Watch it spring back a little.'],['Cooling','No kiln firing, no cement, no water in the mix. The mould opens.'],['One Ittige block','Made from code, not a photo. Still to be lab tested before anything is sold.']];
+const CAP=[['A bottle drops','It falls under gravity and bounces once. The bottle is only our visual hook. The real feed is film and caps.'],['Shredded into flakes','Carry bags, milk pouches and bottle caps are sorted and shredded. Each piece flies, bounces and settles. A few bottle flakes are only for the story.'],['Sand joins the mix','About 70% sand by weight in our model. Sand grains fall and mix in with the plastic pieces.'],['Into the furnace','Heat melts the plastic so it coats the sand grains and becomes the binder.'],['Pressed','The hot mix is squeezed into shape. Watch it spring back a little.'],['Cooling','No kiln firing, no cement, no water in the mix. The mould opens.'],['One Ittige block','Stamped MUSE, for our school. Made from code, not a photo. Still to be lab tested before anything is sold.']];
 export default function BrickScene(){
  const wrapRef=useRef(null),cv=useRef(null),bar=useRef(null),[stage,setStage]=useState(0);
  useEffect(()=>{
@@ -39,6 +44,13 @@ export default function BrickScene(){
   const tex=brickTex();tex.repeat.set(2,1);
   const brickMat=std({map:tex,bumpMap:tex,bumpScale:1.2,roughness:.92,emissive:0xff5a00,emissiveIntensity:0});
   const slab=add(bx(1,1,1),brickMat,0,0,0,B);slab.visible=false;
+  const tTop=museTex(1024,478,300),tSide=museTex(1024,341,240);
+  const dec=t=>std({map:t,transparent:true,opacity:0,roughness:.9,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2});
+  const mTop=dec(tTop),mSide=dec(tSide),pg=new THREE.PlaneGeometry(1,1);
+  const dTop=new THREE.Mesh(pg,mTop);dTop.rotation.x=-Math.PI/2;dTop.position.y=.503;
+  const dFront=new THREE.Mesh(pg,mSide);dFront.position.z=.503;
+  const dBack=new THREE.Mesh(pg,mSide);dBack.position.z=-.503;dBack.rotation.y=Math.PI;
+  const muse=new THREE.Group();muse.add(dTop,dFront,dBack);slab.add(muse);muse.visible=false;
   const press=add(bx(W,0.15,D),steel,0,6,0,B);
   const hop=add(new THREE.CylinderGeometry(0.7,0.14,0.8,28,1,true),std({color:0x59544f,roughness:.5,metalness:.5,side:THREE.DoubleSide}),0,5.9,0,B,false);
   const prof=[[0,0],[.26,0],[.28,.06],[.28,.9],[.24,1.05],[.12,1.22],[.09,1.32],[.09,1.5],[0,1.5]].map(([x,y])=>new THREE.Vector2(x,y-0.75));
@@ -80,6 +92,7 @@ export default function BrickScene(){
    slab.visible=p>.575;press.visible=p>.6&&p<.87;const sy=Math.max(hh*Math.max(m,.02),.001);slab.scale.set(W-.04,sy,D-.04);
    slab.position.y=BASE+sy/2+1.05*ease(seg(p,.9,.95));
    slab.rotation.y=7*ease(seg(p,.9,1))+.4*clock*ease(seg(p,.95,1));slab.rotation.x=.4*ease(seg(p,.92,1));
+   const mo=ease(seg(p,.9,.96));mTop.opacity=mSide.opacity=mo;muse.visible=mo>.001;
    brickMat.emissiveIntensity=1.1*(1-seg(p,.72,.92))*clamp(m*4);
    const gl=seg(p,.48,.56)*(1-seg(p,.8,.92));glowMat.emissiveIntensity=1.4*gl;heat.intensity=40*gl;
    const wo=ease(seg(p,.78,.84));wl.position.x=-(W/2+.03)-.9*wo;wrr.position.x=W/2+.03+.9*wo;wl.visible=wrr.visible=wb.visible=p<.9;
@@ -91,7 +104,7 @@ export default function BrickScene(){
   const t00=performance.now();
   const loop=()=>{cur+=(target-cur)*.12;if(Math.abs(target-cur)<1e-4)cur=target;update(cur,(performance.now()-t00)/1000);if(bar.current)bar.current.style.transform=`scaleX(${cur})`;R.render(S,cam);raf=requestAnimationFrame(loop);};
   addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',resize);resize();onScroll();cur=target;loop();
-  return()=>{cancelAnimationFrame(raf);removeEventListener('scroll',onScroll);removeEventListener('resize',resize);R.dispose();};
+  return()=>{cancelAnimationFrame(raf);removeEventListener('scroll',onScroll);removeEventListener('resize',resize);tTop.dispose();tSide.dispose();R.dispose();};
  },[]);
  return(<section ref={wrapRef} className="scene" id="build" style={{height:'760vh'}}><div className="stick"><canvas ref={cv} role="img" aria-label={`Animated scene, step ${stage+1} of 7: ${CAP[stage][0]}. ${CAP[stage][1]}`}/>
   <div className="cap" aria-live="polite"><span>{stage+1} / 7</span><h3>{CAP[stage][0]}</h3><p>{CAP[stage][1]}</p></div>
